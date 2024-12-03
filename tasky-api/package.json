@@ -14,10 +14,11 @@
     "@babel/eslint-parser": "^7.25.9",
     "@babel/node": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@typescript-eslint/parser": "^8.17.0",
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.6",
     "express": "^4.21.1",
     "uuid": "^11.0.3"
   }
