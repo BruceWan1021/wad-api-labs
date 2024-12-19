@@ -1,46 +1,21 @@
 import express from 'express';
-import Task from './taskModel';
-import asyncHandler from 'express-async-handler';
+import { tasksData } from './tasksData';
 
-const router = express.Router(); // eslint-disable-line
+const router = express.Router(); 
 
-// Get all tasks
-router.get('/', async (req, res) => {
-    const tasks = await Task.find();
-    res.status(200).json(tasks);
+router.get('/', (req, res) => {
+    res.json(tasksData);
 });
 
-// create a task
-router.post('/', asyncHandler(async (req, res) => {
-    const task = await Task(req.body).save();
-    res.status(201).json(task);
-}));
-
-
-// Update Task
-router.put('/:id', async (req, res) => {
-    if (req.body._id) delete req.body._id;
-    const result = await Task.updateOne({
-        _id: req.params.id,
-    }, req.body);
-    if (result.matchedCount) {
-        res.status(200).json({ code:200, msg: 'Task Updated Successfully' });
-    } else {
-        res.status(404).json({ code: 404, msg: 'Unable to find Task' });
+// Get task details
+router.get('/:id', (req, res) => {
+    const { id } = req.params
+    const task = tasksData.tasks.find(task => task.id === id);
+    if (!task) {
+        return res.status(404).json({ status: 404, message: 'Task not found' });
     }
+    return res.status(200).json(task);
 });
 
-// delete Task
-router.delete('/:id', async (req, res) => {
-    if (req.body._id) delete req.body._id;
-    const result = await Task.deleteOne({
-        _id: req.params.id,
-    });
-    if (result.deletedCount) {
-        res.status(204).json();
-    } else {
-        res.status(404).json({ code: 404, msg: 'Unable to find Task' });
-    }
-});
 
 export default router;
