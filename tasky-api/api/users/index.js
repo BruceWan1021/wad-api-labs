@@ -40,4 +40,6 @@ router.put('/:id', async (req, res) => {
         res.status(404).json({ code: 404, msg: 'Unable to Update User' });
     }
 });
+
+
 export default router;
